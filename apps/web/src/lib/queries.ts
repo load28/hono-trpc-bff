@@ -24,20 +24,20 @@ export const screenKeys = {
 
 export const dashboardHomeQueryOptions = queryOptions({
   queryKey: screenKeys.dashboard,
-  queryFn: () => trpc.dashboard.home.query(),
+  queryFn: () => trpc.screen.dashboard.query(),
   staleTime: 10 * 1000,
 })
 
 export const memoTimelineQueryOptions = queryOptions({
   queryKey: screenKeys.timeline,
-  queryFn: () => trpc.memo.timeline.query(),
+  queryFn: () => trpc.screen.memoTimeline.query(),
   staleTime: 10 * 1000,
 })
 
 export function memoDetailQueryOptions(id: string) {
   return queryOptions({
     queryKey: screenKeys.detail(id),
-    queryFn: () => trpc.memo.detail.query({ id }),
+    queryFn: () => trpc.screen.memoDetail.query({ id }),
     staleTime: 10 * 1000,
   })
 }
