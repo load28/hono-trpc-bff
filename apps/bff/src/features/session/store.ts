@@ -1,13 +1,14 @@
 import type { PublicUser } from '@memo/shared'
+import { SESSION_TTL_MS } from '../../shared/constants'
 
 type Session = {
   user: PublicUser
   expiresAt: number
 }
 
-const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000
-
 const sessions = new Map<string, Session>()
+
+const isExpired = (session: Session): boolean => session.expiresAt < Date.now()
 
 export const sessionStore = {
   create(user: PublicUser): string {
@@ -17,13 +18,13 @@ export const sessionStore = {
   },
 
   get(id: string): Session | null {
-    const s = sessions.get(id)
-    if (!s) return null
-    if (s.expiresAt < Date.now()) {
+    const session = sessions.get(id)
+    if (!session) return null
+    if (isExpired(session)) {
       sessions.delete(id)
       return null
     }
-    return s
+    return session
   },
 
   delete(id: string): boolean {

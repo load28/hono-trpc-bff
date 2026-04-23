@@ -1,11 +1,12 @@
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
+
+import { Anchor, Container, MantineProvider, Text, Title } from '@mantine/core'
+import { ModalsProvider } from '@mantine/modals'
+import { Notifications } from '@mantine/notifications'
 import type { QueryClient } from '@tanstack/react-query'
-import {
-  HeadContent,
-  Outlet,
-  Scripts,
-  createRootRouteWithContext,
-} from '@tanstack/react-router'
-import { authMeQueryOptions } from '~/lib/queries'
+import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
+import { authMeQueryOptions } from '~/features/auth/queries'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
@@ -30,7 +31,12 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body>
-        <Outlet />
+        <MantineProvider>
+          <ModalsProvider>
+            <Notifications position="top-right" />
+            <Outlet />
+          </ModalsProvider>
+        </MantineProvider>
         <Scripts />
       </body>
     </html>
@@ -39,19 +45,11 @@ function RootComponent() {
 
 function NotFound() {
   return (
-    <main
-      style={{
-        fontFamily: 'system-ui, sans-serif',
-        padding: '4rem 1rem',
-        textAlign: 'center',
-      }}
-    >
-      <h1>Not Found</h1>
-      <p>
-        <a href="/" style={{ color: '#06c' }}>
-          ← 홈
-        </a>
-      </p>
-    </main>
+    <Container size="sm" py="xl" ta="center">
+      <Title order={1}>Not Found</Title>
+      <Text mt="sm">
+        <Anchor href="/">← 홈</Anchor>
+      </Text>
+    </Container>
   )
 }

@@ -1,4 +1,4 @@
-import { TRPCError, initTRPC } from '@trpc/server'
+import { initTRPC, TRPCError } from '@trpc/server'
 import type { Ctx } from './context'
 
 const t = initTRPC.context<Ctx>().create()

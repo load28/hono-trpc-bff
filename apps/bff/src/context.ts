@@ -1,8 +1,7 @@
 import type { PublicUser } from '@memo/shared'
 import type { Context as HonoContext } from 'hono'
-import { getCookie } from 'hono/cookie'
-import { SESSION_COOKIE } from './constants'
-import { sessionStore } from './sessions'
+import { readSessionId } from './features/auth/cookies'
+import { sessionStore } from './features/session/store'
 
 export type Ctx = {
   user: PublicUser | null
@@ -10,11 +9,9 @@ export type Ctx = {
 }
 
 export function createContext(c: HonoContext): Ctx {
-  const sid = getCookie(c, SESSION_COOKIE)
+  const sid = readSessionId(c)
   if (!sid) return { user: null, hono: c }
 
   const session = sessionStore.get(sid)
-  if (!session) return { user: null, hono: c }
-
-  return { user: session.user, hono: c }
+  return { user: session?.user ?? null, hono: c }
 }

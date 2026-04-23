@@ -3,8 +3,11 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { createContext } from './context'
+import { authApp } from './features/auth/http'
+import { initializeUserStore } from './features/auth/user-store'
 import { appRouter } from './router'
-import { authApp } from './routes/auth'
+
+await initializeUserStore()
 
 const app = new Hono()
 
@@ -36,7 +39,6 @@ app.use(
 
 const port = Number(process.env.PORT ?? 4001)
 
-// biome-ignore lint/suspicious/noConsole: boot log
 console.log(`BFF listening on http://localhost:${port}`)
 
 export default {
