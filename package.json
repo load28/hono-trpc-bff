@@ -1,0 +1,22 @@
+{
+  "name": "memo-bff",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "typecheck": "turbo typecheck",
+    "format": "biome format --write .",
+    "lint": "biome check ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.12",
+    "turbo": "^2.9.6",
+    "typescript": "^6.0.3"
+  },
+  "packageManager": "bun@1.2.16"
+}

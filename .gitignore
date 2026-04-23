@@ -1,0 +1,17 @@
+node_modules
+dist
+.output
+.tanstack
+.turbo
+.DS_Store
+*.log
+.env
+.env.local
+.env.*.local
+
+# editors
+.idea
+.vscode
+
+# generated
+**/routeTree.gen.ts
